@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  mariadb:
+    image: mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 9IpdKiUNIXMDaQyARFR
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: 7veOfcAMTyEYcprsA4g
+
+  wordpress:
+    depends_on:
+      - mariadb
+    image: wordpress:latest
+    ports:
+      - "80:80"
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: 7veOfcAMTyEYcprsA4g
+    volumes:
+      - ./code:/code
+      - ./var/html:/var/www/html
+      
+volumes:
+  db_data:
