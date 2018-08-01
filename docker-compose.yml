@@ -5,11 +5,8 @@ services:
     image: mariadb
     volumes:
       - db_data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: 9IpdKiUNIXMDaQyARFR
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: 7veOfcAMTyEYcprsA4g
+    env_file:
+      - db.env
 
   wordpress:
     depends_on:
@@ -17,13 +14,11 @@ services:
     image: wordpress:latest
     ports:
       - "80:80"
-    environment:
-      WORDPRESS_DB_HOST: mariadb:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: 7veOfcAMTyEYcprsA4g
+    env_file:
+      - wordpress.env
     volumes:
       - ./code:/code
       - ./var/html:/var/www/html
-      
+
 volumes:
   db_data:
